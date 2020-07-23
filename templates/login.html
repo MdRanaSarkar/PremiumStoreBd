@@ -1,0 +1,90 @@
+{% extends 'home.html' %}
+{%load static%}
+{%block title %} Login {{setting.title}} {% endblock %}
+{% block description %} {{setting.description}} {% endblock %}
+{% block keywords %} {{setting.keyword}} {% endblock %}
+{% block sidebar %} {% include 'catergory.html' %} {% endblock %}
+
+{% block body %} 
+<div id="breadcrum">
+	<div class="container">
+		<div >
+			<ul class="breadcrumb">
+				<li> <a href="{%url 'index'%}">Home</a></li> 
+				>>
+				<li class="active">Login</li>
+			</ul>
+			
+		</div>
+		
+	</div>
+	
+</div>
+
+
+<div class="section">
+<div class="container">
+	{%if messages %}
+
+		   {% for message in messages %}
+		      <div class="alert alert-{{ message.tags }}" role="alert">
+		      	{{message}}
+		      </div>
+		    {% endfor %}
+	{% endif %}
+
+<style>
+	#forcenter{
+		padding-left: 400px;
+	}
+	#logocenter{
+				padding-left: 100px;
+	}
+	
+	#forcenter h2{
+		padding-right: 50px;
+	}
+</style>
+
+
+
+    <div class="row align-items-center" id="forcenter">
+    	<div class="form-group col-md-6" style="padding-left:200">
+			<form action="{%url 'for_login'%}" method="POST">
+
+					
+				{%csrf_token%}
+			
+				<div class="d-flex justify-content-center" id="logocenter">
+				<img src="{%static ''%}img/log/avatar.svg" style="height:100px;padding-left:10px;">
+				<h2 class="title" style="font-size:20">Welcome</h2>
+			   </div>
+           		<div class="input-div one">
+           		   <div class="i">
+           		   		<i class="fas fa-user"></i>
+           		   </div>
+           		   <div class="div">
+           		   		<h5>Username</h5>
+           		   		<input type="text" class="input" name="username">
+           		   </div>
+           		</div>
+           		<div class="input-div pass">
+           		   <div class="i"> 
+           		    	<i class="fas fa-lock"></i>
+           		   </div>
+           		   <div class="div">
+           		    	<h5>Password</h5>
+           		    	<input type="password" class="input" name="password">
+            	   </div>
+            	</div>
+            	<a href="#">Forgot Password?</a>
+            	<input type="submit" class="btn" value="Login">
+            
+            </form>
+       </div>
+    </div>
+</div>	
+</div>
+
+
+ {% endblock %}

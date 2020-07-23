@@ -1,0 +1,69 @@
+{% extends 'home.html' %}
+
+{%block title %} Contact {{setting.title}} {% endblock %}
+{% block description %} {{setting.description}} {% endblock %}
+{% block keywords %} {{setting.keyword}} {% endblock %}
+{% block sidebar %} {% include 'catergory.html' %} {% endblock %}
+{% block body %} 
+<div id="breadcrum">
+	<div class="container">
+		<div >
+			<ul class="breadcrumb">
+				<li> <a href="{%url 'index'%}">Home</a></li> 
+				>>
+				<li class="active">Contact</li>
+			</ul>
+			
+		</div>
+		
+	</div>
+	
+</div>
+<div class="section">
+  <div class="container">
+
+                <div class="col-md-4">
+                		
+			
+						<div class="billing-details">
+							<div class="section-title">
+								<h3 class="title">Contact Form</h3>
+							</div>
+						{%if messages %}
+					
+                           {% for message in messages %}
+                              <div class="alert alert-{{ message.tags }}" role="alert">
+                              	{{message}}
+                              </div>
+                            {% endfor %}
+						{% endif %}
+
+							<form id="checkout-form" class="clearfix" method="POST">
+								{% csrf_token %}
+								{{form.as_p}}
+
+								<input type="submit" value="Send Message" class="btn btn-primary" name="btn1">
+						
+							 </form>
+						</div>
+			
+
+      
+
+                </div>
+       <div class="col-md-8">
+                    <div class="shiping-methods">
+                        <div class="section-title">
+                            <h3 class="title">Contact Informations</h3>
+                        </div>
+                        <div >
+                            {{ setting.contact|safe }}
+                        </div>
+
+                    </div>
+       </div>
+                 </div>
+                   </div>
+
+
+ {% endblock %}

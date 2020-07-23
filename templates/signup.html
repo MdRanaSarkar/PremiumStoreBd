@@ -1,0 +1,68 @@
+{% extends 'home.html' %}
+{% load crispy_forms_tags %}
+{%block title %} SignUp  {{setting.title}} {% endblock %}
+{% block description %} {{setting.description}} {% endblock %}
+{% block keywords %} {{setting.keyword}} {% endblock %}
+{% block sidebar %} {% include 'catergory.html' %} {% endblock %}
+{% block body %} 
+<div id="breadcrum">
+	<div class="container">
+		<div >
+			<ul class="breadcrumb">
+				<li> <a href="{%url 'index'%}">Home</a></li> 
+				>>
+				<li class="active">SignUp</li>
+			</ul>
+			
+		</div>
+		
+	</div>
+	
+</div>
+	{%if messages %}
+
+		   {% for message in messages %}
+		      <div class="alert alert-{{ message.tags }}" role="alert">
+		      	{{message}}
+		      </div>
+		    {% endfor %}
+	{% endif %}
+ <style>
+ .amar{
+ 	padding-right:50px; 
+ }
+ #formcl{
+ 	padding-right: 450px;
+ 	margin-left: 450px;
+
+ }
+  </style>
+<div class="section">
+<div class="jumbotron d-flex align-items-center">
+  <div class="container">
+  	 <div class="row justify-content-center">
+           
+           	 <div id="formcl"> 
+	 <h2>Sign Up</h2>
+     <form method="post">
+   
+
+  	{%csrf_token%}
+  	  {{form|crispy}}
+  	<input class="btn btn-primary" type="submit" name="Submit">
+
+
+  </form>
+
+   </div>
+</div>
+
+</div>
+</div>
+</div>
+
+
+ {% endblock %}
+
+
+ 	

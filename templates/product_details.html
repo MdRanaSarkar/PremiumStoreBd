@@ -1,0 +1,265 @@
+{% extends 'home.html' %}
+
+{%block title %} {{product.title}} {% endblock %}
+{% block description %} {{product.description}} {% endblock %}
+{% block keywords %} {{product.keyword}} {% endblock %}
+{% block sidebar %} {% include 'catergory.html' %} {% endblock %}
+{% block body %} 
+<div id="breadcrum">
+	<div class="container">
+		<div >
+			<ul class="breadcrumb">
+				<li> <a href="{%url 'index'%}">Home</a></li> 
+				<li><a href="#">Products</a></li>
+				<li><a href="#">{{product.category.title}}</a></li>
+				<li class="active">{{product.title}}</li>
+			</ul>
+			</ul>
+			
+		</div>
+		
+	</div>
+	
+</div>
+<!--
+<div class="section">
+<div class="container">
+	<div class="row">
+		{{setting.address|safe}}
+
+		
+	</div>
+		
+	
+</div>	
+</div>
+-->
+	<!-- section -->
+<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!--  Product Details -->
+				<div class="product product-details clearfix">
+					<div class="col-md-6">
+						<div id="product-main-view">
+							<div class="product-view">
+								<img src="{{product.imageurl}}"class="zoomImg" style="height:400px" alt="">
+							</div>
+							{%for p in images%}
+							<div class="product-view">
+								<img src="{{p.imageurl}}"class="zoomImg" style="height:400px" alt="">
+							</div>
+							{%endfor%}
+						
+						</div>
+						<div id="product-view">
+							<div class="product-view">
+								<img src="{{product.imageurl}}" style="height:100px"  alt="">
+							</div>
+							{%for p in images%}
+							<div class="product-view">
+								<img src="{{p.imageurl}}"class="zoomImg" style="height:100px"   alt="">
+							</div>
+							{%endfor%}
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="product-body">
+							<div class="product-label">
+								<span>New</span>
+								<span class="sale">-20%</span>
+							</div>
+							<h2 class="product-name">{{product.title}}</h2>
+							<h3 class="product-price">${{product.new_price}} <del class="product-old-price">${{product.old_price}}</del></h3>
+							<div>
+								<div class="product-rating">
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star"></i>
+									<i class="fa fa-star-o empty"></i>
+								</div>
+								<a href="#">3 Review(s) / Add Review</a>
+							</div>
+							<p><strong>Availability:</strong> In Stock</p>
+							<p><strong>Brand:</strong> E-SHOP</p>
+							<p>{{product.detail|safe}}</p>
+					
+							<div class="product-btns">
+								
+								
+					
+								<div class="qty-input">
+									<span class="text-uppercase">QTY: </span>
+									<form  method="POST" action="{%url 'Add_to_Shoping_cart' id=product.id%}">
+									{%csrf_token%}
+									<input class="input" type="number" name="quantity" value="1" min="1" max="{{product.amount}}">
+									<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> Add to Cart</button>
+								</form>
+								</div>
+								
+								<div class="pull-right">
+									<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+									<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+									<button class="main-btn icon-btn"><i class="fa fa-share-alt"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="product-tab">
+							<ul class="tab-nav">
+								<li><a data-toggle="tab" href="#tab1">Description</a></li>
+								<li><a data-toggle="tab" href="#tab2">Reviews (3)</a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="tab1" class="tab-pane fade in active">
+									<p>{{product.detail|safe}}</p>
+								</div>
+								<div id="tab2" class="tab-pane fade in">
+
+									<div class="row">
+										<!--Here calling the comment according to products -->
+									
+										<div class="col-md-6">
+												{%for p in comment_all %}
+											<div class="product-reviews">
+												<div class="single-review">
+													<div class="review-heading">
+														<div><a href="#"><i class="fa fa-user-o"></i>{{p.user}}</a></div>
+														<div><a href="#"><i class="fa fa-clock-o"></i> {{p.created_at}}</a></div>
+												<div class="review-rating pull-right">
+													<i class="fa fa-star{%if p.rate < 1 %} -o empty {%endif%}"></i>
+													<i class="fa fa-star{%if p.rate < 2 %} -o empty {%endif%}"></i>
+													<i class="fa fa-star{%if p.rate < 3 %} -o empty {%endif%}"></i>
+													<i class="fa fa-star{%if p.rate < 4 %} -o empty {%endif%}"></i>
+													<i class="fa fa-star{%if p.rate < 5 %} -o empty {%endif%}"></i>
+												</div>
+												</div>
+													<div class="review-body">
+														<p>{{p.comment}}</p>
+													</div>
+												</div>
+
+												
+												<ul class="reviews-pages">
+													<li class="active">1</li>
+													<li><a href="#">2</a></li>
+													<li><a href="#">3</a></li>
+													<li><a href="#"><i class="fa fa-caret-right"></i></a></li>
+												</ul>
+											</div>
+											{%endfor%}
+										</div>
+										
+										<div class="col-md-6">
+											<h4 class="text-uppercase">Write Your Review</h4>
+											<h6>
+							
+											{%if messages %}
+										
+					                           {% for message in messages %}
+					                              <div class="alert alert-{{ message.tags }}" role="alert">
+					                              	{{message}}
+					                              </div>
+					                            {% endfor %}
+											{% endif %} 
+											</h6>
+											<form class="review-form" method="POST" action="{%url 'comment_add' id=product.id%}">
+												{%csrf_token%}
+												<div class="form-group">
+													<input name="subject" class="input" type="text" placeholder="Your subject Here" required />
+												</div>
+												<div class="form-group">
+													<textarea name="comment"  class="input" placeholder="Your review" required></textarea>
+												</div>
+												<div class="form-group">
+													<div class="input-rating">
+														<strong class="text-uppercase">Your Rating: </strong>
+														<div class="stars">
+															<input type="radio" name="rate" id="star5" name="rating" value="5" /><label for="star5"></label>
+															<input type="radio" name="rate" id="star4" name="rating" value="4" /><label for="star4"></label>
+															<input type="radio" name="rate" id="star3" name="rating" value="3" /><label for="star3"></label>
+															<input type="radio" name="rate" id="star2" name="rating" value="2" /><label for="star2"></label>
+															<input type="radio" name="rate" id="star1" name="rating" value="1" /><label for="star1"></label>
+														</div>
+													</div>
+												</div>
+												{%if user.id is not None%}
+												<input type="submit" class="btn btn-primary" name="button" value="Submite Here">
+												{%else%}
+												<h3> You are not login ,kindly login </h3>
+												{%endif%}
+											</form>
+										</div>
+									</div>
+
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!-- /Product Details -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+		<!-- section -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- section title -->
+				<div class="col-md-12">
+					<div class="section-title">
+						<h2 class="title">Picked For You</h2>
+					</div>
+				</div>
+				<!-- section title -->
+
+				<!-- Product Single -->
+				{%for p in picked_product%}
+				<div class="col-md-3 col-sm-6 col-xs-6">
+					<div class="product product-single">
+						<div class="product-thumb">
+							<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> <a href="{%url 'product_details' id=p.id slug=p.slug%}" >Quick view</a></button>
+							<img src="{{p.imageurl}}" alt="" style="height:250px">
+						</div>
+						<div class="product-body">
+							<h3 class="product-price">${{p.new_price}} <del class="product-old-price">${{p.old_price}}</del></h3>
+							<div class="product-rating">
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star"></i>
+								<i class="fa fa-star-o empty"></i>
+							</div>
+							<h2 class="product-name"><a href="#">{{p.title}}</a></h2>
+							<div class="product-btns">
+								<button class="main-btn icon-btn"><i class="fa fa-heart"></i></button>
+								<button class="main-btn icon-btn"><i class="fa fa-exchange"></i></button>
+								<button class="primary-btn add-to-cart"><i class="fa fa-shopping-cart"></i> <a href="{%url 'add_to_c' id=p.id%}"> Add to Cart</a></button>
+							</div>
+						</div>
+					</div>
+				</div>
+				{%endfor%}
+				<!-- /Product Single -->
+
+				
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /section -->
+
+ {% endblock %}
